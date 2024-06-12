@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>JSF Test</title>
+</h:head>
+<h:body>
+    <h:form>
+
+        <h:panelGrid columns="2">
+            <h:outputLabel value="User login:"/>
+            <h:inputText value="#{userController.login}" required="true"/>
+        </h:panelGrid>
+
+        <h:commandButton value="Search" action="#{userController.getUsersByText()}"/>
+
+        <ui:repeat value="#{userController.users}" var="user">
+            <h3>#{user.login}
+                <h:commandButton value="Show" action="#{userController.getUser(user.login)}"/>
+            </h3>
+
+        </ui:repeat>
+
+        <br></br>
+        <br></br>
+        <br></br>
+
+
+    </h:form>
+
+    <c:choose>
+        <c:when test="#{not empty userController.userProfile}">
+            <h:panelGrid columns="2">
+                <h:outputLabel
+                        value="User login: #{userController.userProfile.login}, name: #{userController.userProfile.name}, role: #{userController.userProfile.role}"/>
+            </h:panelGrid>
+            <ui:repeat value="#{userController.userPosts}" var="post">
+                <h4>Post id: #{post.id} - Date: #{post.date} </h4>
+            </ui:repeat>
+        </c:when>
+    </c:choose>
+</h:body>
+</html>
